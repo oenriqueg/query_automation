@@ -7,6 +7,7 @@ QMF Query Automation Script for invoices
 
 """
 
+#import modules
 #módulos a importar
 import pyautogui as robot
 import time
@@ -14,30 +15,34 @@ import datetime
 from win32api import GetKeyState 
 from win32con import VK_NUMLOCK 
 
+#variables and constants declaration
 #declaración de variables y constantes
 
+#constants
 #constantes
 robot.FAILSAFE = True
 robot.PAUSE = 1
 
+#variables for keyboard
 #variables del teclado
 numlock_status = GetKeyState(VK_NUMLOCK)
 type_speed = 0.050
 shorcut_speed = 0.050
 
+#requesting data to open and run QMF app
 #variables a solicitar para ejecutar el query en QMF
-username = robot.prompt(text="", title="Ingresa tu nombre de usuario de CAAPS", default="mx1467")
-password = robot.password(text="", title="Ingresa tu password de CAAPS", default="3nr1qu32109ibmx.", mask="*")
-exchange_rate = robot.prompt(text="", title="Ingresa el tipo de cambio del mes", default="20.08")
-start_date = robot.prompt(text="", title="Ingresa la fecha de inicio para tu query", default="20210901")
-end_date = robot.prompt(text="", title="Ingresa la fecha de fin para tu query", default="20210930")
+username = robot.prompt(text="", title="Enter your username: ", default="user")
+password = robot.password(text="", title="Enter your password: ", default="password", mask="*")
+exchange_rate = robot.prompt(text="", title="Enter exchange rate for this month (MXN to USD): ", default="20.08")
+start_date = robot.prompt(text="", title="Enter a start date for data: ", default="20210901")
+end_date = robot.prompt(text="", title="Enter a end date for data: ", default="20210930")
 start_date_rejected = robot.prompt(text="", title="Ingresa la fecha de 3 meses antes para facturas rechazadas", default="20210601")
 today = datetime.datetime.now()
-saved_query_path = "C:\\Users\\OSCARENRIQUEESTRADAG\\Box\\queries_caaps\\Produccion\\{:}".format(today.strftime("%Y\\%B\\raw\\caaps_%d_%B_%Y.xlsx"))
-saved_query_rejected_path = "C:\\Users\\OSCARENRIQUEESTRADAG\\Box\\queries_caaps\\Produccion\\{:}".format(today.strftime("%Y\\%B\\raw\\caaps_%d_%B_%Y_rejected.xlsx"))
-template_report_path = "C:\\Users\\OSCARENRIQUEESTRADAG\\Box\\queries_caaps\\Produccion\\template.xlsx"
-saved_final_report = "C:\\Users\\OSCARENRIQUEESTRADAG\Box\\queries_caaps\\Produccion\\{:}".format(today.strftime("%Y\\%B\\final\\caaps_report_%d_%B_%Y.xlsx"))
-qmf_app_path = "C:\Program Files\IBM\DB2 Query Management Facility v12.1\QMF for Workstation\qmfdev.exe"
+saved_query_path = "C:\\path\\{:}".format(today.strftime("%Y\\%B\\raw\\filename_%d_%B_%Y.xlsx"))
+saved_query_rejected_path = "C:\\path\\{:}".format(today.strftime("%Y\\%B\\raw\\filename_%d_%B_%Y_rejected.xlsx"))
+template_report_path = "C:\\path\\template.xlsx"
+saved_final_report = "C:\\path\\{:}".format(today.strftime("%Y\\%B\\final\\filename_%d_%B_%Y.xlsx"))
+qmf_app_path = "C:\\path_app\\qmfdev.exe"
 
 
 #función para mover el puntero y dar un click
@@ -48,6 +53,7 @@ def click(pos,click=1):
 #inicializar el reloj para medir el tiempo de ejecución al final
 runtime_clock_start = time.time()
 
+#Open QMF App
 #Abrir QMF
 robot.hotkey("winleft","r")
 time.sleep(shorcut_speed)
